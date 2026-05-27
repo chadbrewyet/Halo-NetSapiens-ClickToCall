@@ -94,7 +94,7 @@ npx wrangler deploy
 Configure Halo to call the deployed Worker URL:
 
 ```text
-https://<worker-name>.<subdomain>.workers.dev/api/click-to-call
+https://halo-netsapiens-clicktocall.<subdomain>.workers.dev/api/click-to-call
 ```
 
 Send `ticketId`, `phoneNumber`, and `haloAgentId` from the Halo context. Include `ticketTitle`, `contactName`, and `clientName` when available so the ticket note is more useful.

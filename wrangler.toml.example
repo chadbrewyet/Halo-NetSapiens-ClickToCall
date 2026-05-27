@@ -1,4 +1,4 @@
-name = "halo-netsapiens-click-to-call"
+name = "halo-netsapiens-clicktocall"
 main = "src/worker.js"
 compatibility_date = "2026-05-27"
 
