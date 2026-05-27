@@ -1,0 +1,11 @@
+{
+  "name": "halo-netsapiens-click-to-call",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check src/worker.js && node --check src/netsapiens-utils.mjs",
+    "test": "node tests/netsapiens-utils.test.mjs && node tests/worker.test.mjs"
+  },
+  "devDependencies": {}
+}
