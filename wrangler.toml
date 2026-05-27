@@ -8,15 +8,5 @@ compatibility_date = "2026-05-27"
 # wrangler secret put NETSAPIENS_API_KEY
 # wrangler secret put INTEGRATION_SHARED_TOKEN
 
-[vars]
-HALO_AUTH_URL = "https://your-halo.example.com/auth/token"
-HALO_RESOURCE_SERVER = "https://your-halo.example.com"
-HALO_SCOPE = "all"
-HALO_NETSAPIENS_CALL_OUTCOME = "Private Note"
-
-# Set this to your NetSapiens API server base URL.
-NETSAPIENS_BASE_URL = "https://ns-api.com"
-NETSAPIENS_AGENT_MAP_JSON = "{}"
-NETSAPIENS_DIAL_RULE_APPLICATION = "call"
-NETSAPIENS_DEFAULT_CALLER_ID = ""
-NETSAPIENS_DEFAULT_CALLBACK_CALLER_ID = ""
+# Runtime variables are managed in the Cloudflare dashboard.
+# Deploy with --keep-vars so dashboard-set values are preserved.

@@ -38,6 +38,7 @@ The Worker:
 ## Configuration
 
 Copy `wrangler.toml.example` to `wrangler.toml` or edit the included `wrangler.toml`.
+For this public repo, keep live variable values in the Cloudflare dashboard rather than committing them.
 
 Set secrets:
 
@@ -80,14 +81,16 @@ If `callOrigUser` is omitted, the Worker uses `{user}@{domain}`.
 ```powershell
 npm test
 npm run check
-npx wrangler deploy --dry-run
+npx wrangler deploy --dry-run --keep-vars
 ```
 
 ## Deploy
 
 ```powershell
-npx wrangler deploy
+npx wrangler deploy --keep-vars
 ```
+
+Use `--keep-vars` when variables are managed in the Cloudflare dashboard so a deploy does not replace them with local placeholder values from `wrangler.toml`.
 
 ## Halo Custom Integration Shape
 
