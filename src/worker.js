@@ -29,8 +29,8 @@ export default {
       }
 
       if (url.pathname === "/api/click-to-call" && request.method === "POST") {
-        requireIntegrationAuth(request, env);
         const payload = await request.json();
+        requireIntegrationAuth(request, env, payload);
         return json(await handleClickToCall(payload, env));
       }
 
@@ -105,11 +105,16 @@ export async function handleClickToCall(payload, env) {
   }
 }
 
-function requireIntegrationAuth(request, env) {
+function requireIntegrationAuth(request, env, payload = {}) {
   if (!env.INTEGRATION_SHARED_TOKEN) return;
   const bearer = String(request.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
   const headerToken = String(request.headers.get("X-Integration-Token") || "").trim();
-  if (bearer === env.INTEGRATION_SHARED_TOKEN || headerToken === env.INTEGRATION_SHARED_TOKEN) return;
+  const bodyToken = String(payload.integrationToken || payload.sharedToken || "").trim();
+  if (
+    bearer === env.INTEGRATION_SHARED_TOKEN ||
+    headerToken === env.INTEGRATION_SHARED_TOKEN ||
+    bodyToken === env.INTEGRATION_SHARED_TOKEN
+  ) return;
   const error = new Error("Unauthorized.");
   error.status = 401;
   throw error;

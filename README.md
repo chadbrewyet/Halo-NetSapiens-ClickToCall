@@ -15,6 +15,10 @@ Authorization: Bearer <INTEGRATION_SHARED_TOKEN>
 Content-Type: application/json
 ```
 
+If Halo's webhook UI cannot send custom authorization headers, set the Halo webhook
+authentication option to `No authentication` and include the same secret in the JSON
+body as `integrationToken`.
+
 Body:
 
 ```json
@@ -22,6 +26,7 @@ Body:
   "ticketId": 12345,
   "phoneNumber": "(555) 123-4567",
   "haloAgentId": "4",
+  "integrationToken": "<INTEGRATION_SHARED_TOKEN>",
   "ticketTitle": "Printer issue",
   "contactName": "A. Customer",
   "clientName": "Example Co"
@@ -101,3 +106,6 @@ https://halo-netsapiens-clicktocall.<subdomain>.workers.dev/api/click-to-call
 ```
 
 Send `ticketId`, `phoneNumber`, and `haloAgentId` from the Halo context. Include `ticketTitle`, `contactName`, and `clientName` when available so the ticket note is more useful.
+
+If Halo only offers built-in webhook authentication types, choose `No authentication`
+for this v1 endpoint and pass `integrationToken` in the JSON body over HTTPS.

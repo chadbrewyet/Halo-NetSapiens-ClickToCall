@@ -21,12 +21,11 @@ const baseEnv = {
 };
 
 function clickRequest(payload, token = "test-token") {
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers.Authorization = `Bearer ${token}`;
   return new Request("https://worker.example.test/api/click-to-call", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
-    },
+    headers,
     body: JSON.stringify(payload)
   });
 }
@@ -54,6 +53,29 @@ async function runClick(payload, env = baseEnv, token = "test-token") {
 {
   const result = await runClick({ ticketId: 123, phoneNumber: "5551234567", haloAgentId: "4" }, baseEnv, "wrong-token");
   assert.equal(result.status, 401);
+}
+
+{
+  globalThis.fetch = async (url) => {
+    if (String(url).includes("/ns-api/v2/")) {
+      return Response.json({ accepted: true }, { status: 202 });
+    }
+    if (String(url).includes("/auth/token")) {
+      return Response.json({ access_token: "halo-token", expires_in: 3600 });
+    }
+    if (String(url).includes("/api/Actions")) {
+      return Response.json({ id: 77 });
+    }
+    return Response.json({ error: "unexpected" }, { status: 500 });
+  };
+
+  const result = await runClick({
+    ticketId: 123,
+    phoneNumber: "5551234567",
+    haloAgentId: "4",
+    integrationToken: "test-token"
+  }, baseEnv, "");
+  assert.equal(result.status, 200);
 }
 
 {
